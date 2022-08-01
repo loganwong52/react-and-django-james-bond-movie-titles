@@ -1,4 +1,4 @@
-# react-and-django-james-bond-movie-titles
+# README
 
 Words that appear more than once in James Bond film titles.
 I got the titles from https://www.pocket-lint.com/tv/news/148096-james-bond-007-best-movie-viewing-order-chronological-release
