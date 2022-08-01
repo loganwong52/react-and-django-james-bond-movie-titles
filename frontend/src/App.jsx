@@ -61,7 +61,10 @@ function App() {
       return [key, title_dict[key]];
     });
 
-    // Sort the array by word count
+    // sort alphabetically first
+    items.sort()
+
+    // THEN, sort the array by word count
     items.sort(function (first, second) {
       return second[1] - first[1]
     });
