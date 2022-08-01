@@ -3,8 +3,11 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 function App() {
-  const [titles, setTitle] = useState([])
+  const [titles, setTitles] = useState([])
 
+  // 21 titles have the letter 'o'
+  // Thunderball, Live and Let Die, The Living Daylights, Skyfall, Spectre, Never say Never Again 
+  // I got these titles from https://www.pocket-lint.com/tv/news/148096-james-bond-007-best-movie-viewing-order-chronological-release
   let all_titles = [
     "Dr. No",
     "From Russia with Love",
@@ -41,6 +44,7 @@ function App() {
 
     let title_dict = {}
 
+    // for (let movie_title of titles) {      // this is for the api call
     for (let movie_title of all_titles) {
       movie_title = movie_title.toLowerCase()
       let title_arr = movie_title.split(" ")
@@ -57,18 +61,23 @@ function App() {
       return [key, title_dict[key]];
     });
 
-    // Sort the array based on the second element
+    // Sort the array by word count
     items.sort(function (first, second) {
-      return second[1] - first[1];
+      return second[1] - first[1]
     });
 
     console.log(items)
 
-    for (let item of items) {
+    for (let i = 0; i < items.length; ++i) {
+      let item = items[i]
       if (item[1] > 1) {
         elements.push(
           <p>
-            WORD: {item[0]}
+            <strong>{i + 1}.</strong>
+            WORD:
+            <strong>
+              {item[0]}
+            </strong>
             <br />
             COUNT: {item[1]}
           </p>
@@ -77,15 +86,44 @@ function App() {
     }
 
     return (
-      <div>
+      <div className='word_list'>
         {elements}
       </div>
     )
   }
 
+
+  // on mount, send request to api
+  // get all james bond titles that contain the letter o
+  // const options = {
+  //   method: 'GET',
+  //   url: 'https://james-bond-movie-series-data.p.rapidapi.com/titles/o',
+  //   headers: {
+  //     'X-RapidAPI-Key': 'KEY GOES HERE',
+  //     'X-RapidAPI-Host': 'james-bond-movie-series-data.p.rapidapi.com'
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   axios.request(options).then(function (response) {
+  //     console.log(response.data.data);
+  //     // make a list of titles ONLY
+  //     let foo = []
+  //     for (let item of response.data.data) {
+  //       foo.push(item.title)
+  //     }
+  //     console.log(foo)
+
+  //     setTitles(foo)
+  //   }).catch(function (error) {
+  //     console.error(error);
+  //   });
+  // }, [])
+
   return (
     <div className="App">
-      <h1>Words That Appear More Than Once in James Bond Film Titles</h1>
+      <h2>Words That Appear More Than Once in James Bond Film Titles</h2>
+      <hr />
 
       {renderTitles()}
     </div>
